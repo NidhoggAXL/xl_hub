@@ -2,6 +2,9 @@ const app = require("../app/index");
 const {
   NAME_OR_PASSWORD_NOT_NULL,
   NAME_IS_ALREADY_EXISTS,
+  NAME_IS_MISTAKE,
+  PASSWORD_IS_MISTAKE,
+  TOKEN_IS_NULL
 } = require("../config/error");
 
 // 监听app的error事件
@@ -16,6 +19,19 @@ app.on("error", (err, ctx) => {
     case NAME_IS_ALREADY_EXISTS:
       code = -1002;
       message = "用户名已经被占用，请重新选择用户名！";
+      break;
+    case NAME_IS_MISTAKE:
+      code = -1003;
+      message = "用户名错误，请重新输入！";
+      break;
+    case PASSWORD_IS_MISTAKE:
+      code = -1004;
+      message = "密码错误，请重新输入！";
+      break;
+    case TOKEN_IS_NULL:
+      code = -1005;
+      message = "token不存在，请重新登录！";
+      break;
   }
   ctx.body = {
     code,
