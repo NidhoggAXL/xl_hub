@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const { PRIVATE_KEY } = require("../config/key");
 
 class LoginController {
-  // 登录
+  // 登录控制
   sign(ctx, next) {
     // 1.生成token
     const { id, name } = ctx.user;
@@ -18,6 +18,7 @@ class LoginController {
       console.log(error);
     }
 
+    // 返回登录获取到的token
     ctx.body = {
       code: 0,
       data: {
