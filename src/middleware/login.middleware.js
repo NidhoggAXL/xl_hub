@@ -45,7 +45,6 @@ const verifyAuthor = async (ctx, next) => {
     return ctx.app.emit("error", TOKEN_IS_NULL, ctx);
   }
   const token = authorization.replace("Bearer ", "");
-
   // 验证token
   try {
     // 获取token中的信息
@@ -55,16 +54,15 @@ const verifyAuthor = async (ctx, next) => {
     });
 
     // 将token中的信息存储到ctx中
+    // { id: 13, name: 'aabb', iat: 1771565099, exp: 1771651499 }
     ctx.user = result;
-    ctx.body = {
-      code: 0,
-      message: "验证成功",
-    }
+    // ctx.body = 'yanddd'
+    // 执行下一个中间件
+    await next();
   } catch (error) {
     // 返回错误信息
     return ctx.app.emit("error", TOKEN_IS_NULL, ctx);
   }
-  await next();
 };
 
 module.exports = {

@@ -8,6 +8,6 @@ const loginRouter = new KoaRouter({ prefix: "/login" });
 loginRouter.post("/", verifyLogin, loginController.sign);
 
 // 获取到token，测试接口
-loginRouter.get("/demo", verifyAuthor)
+loginRouter.get("/text", verifyAuthor, loginController.text);
 
 module.exports = loginRouter;

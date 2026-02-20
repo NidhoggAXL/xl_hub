@@ -4,7 +4,6 @@ const fs = require("fs")
 const automateRouter = (app) => {
   // 读取当前文件下的所有文件(同步读取)
   const files = fs.readdirSync(__dirname)
-  console.log(files)
   // 遍历文件
   files.forEach((file) => {
     if (!file.endsWith(".router.js")) return

@@ -1,13 +1,19 @@
 const KoaRouter = require("@koa/router")
 const { verifyAuthor } = require("../middleware/login.middleware")
 const momentController = require("../controller/moment.controller")
+const { verifyMomentPermission } = require("../middleware/permission.middleware")
 
 const momentRouter = new KoaRouter({ prefix: "/moment" })
 
 // 动态接口
-// 1.发布动态
+// 1.发布动态(增)
 momentRouter.post("/", verifyAuthor, momentController.create)
-// 2.获取动
+// 2.动态列表/详情(查)
 momentRouter.get("/", momentController.list)
+momentRouter.get("/:momentId", momentController.detail)
+// 3.更新动态(改)
+momentRouter.patch("/:momentId", verifyAuthor, verifyMomentPermission, momentController.update)
+// 4.删除动态(删)
+momentRouter.delete("/:momentId", verifyAuthor, verifyMomentPermission, momentController.remove)
 
 module.exports = momentRouter

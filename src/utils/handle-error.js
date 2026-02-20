@@ -4,7 +4,8 @@ const {
   NAME_IS_ALREADY_EXISTS,
   NAME_IS_MISTAKE,
   PASSWORD_IS_MISTAKE,
-  TOKEN_IS_NULL
+  TOKEN_IS_NULL,
+  PERMISSION_IS_NOT_ALLOW
 } = require("../config/error");
 
 // 监听app的error事件
@@ -30,7 +31,11 @@ app.on("error", (err, ctx) => {
       break;
     case TOKEN_IS_NULL:
       code = -1005;
-      message = "token不存在，请重新登录！";
+      message = "token不存在, 请重新登录! ";
+      break;
+    case PERMISSION_IS_NOT_ALLOW:
+      code = -2001;
+      message = "权限不足，请联系管理员！";
       break;
   }
   ctx.body = {
