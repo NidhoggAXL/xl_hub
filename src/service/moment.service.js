@@ -1,13 +1,13 @@
 const connection = require("../app/database");
 
 class MomentService {
-  // 发布动态
+    // 发布动态
   async create(content, userId) {
     const statement = "INSERT INTO moment (content, user_id) VALUES (?, ?);";
     const [result] = await connection.execute(statement, [content, userId]);
     return result;
   }
-
+ 
   // 获取动态
   // 使用解构来设置默认值
   async list({ limit = "0", offset = "10" } = query) {

@@ -1,7 +1,7 @@
 const KoaRouter = require("@koa/router")
 const { verifyAuthor } = require("../middleware/login.middleware")
 const momentController = require("../controller/moment.controller")
-const { verifyMomentPermission } = require("../middleware/permission.middleware")
+const { verifyPermission } = require("../middleware/permission.middleware")
 
 const momentRouter = new KoaRouter({ prefix: "/moment" })
 
@@ -12,8 +12,8 @@ momentRouter.post("/", verifyAuthor, momentController.create)
 momentRouter.get("/", momentController.list)
 momentRouter.get("/:momentId", momentController.detail)
 // 3.更新动态(改)
-momentRouter.patch("/:momentId", verifyAuthor, verifyMomentPermission, momentController.update)
+momentRouter.patch("/:momentId", verifyAuthor, verifyPermission, momentController.update)
 // 4.删除动态(删)
-momentRouter.delete("/:momentId", verifyAuthor, verifyMomentPermission, momentController.remove)
+momentRouter.delete("/:momentId", verifyAuthor, verifyPermission, momentController.remove)
 
 module.exports = momentRouter

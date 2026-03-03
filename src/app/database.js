@@ -10,7 +10,7 @@ const pool = mysql.createPool({
   connectionLimit: 5,
 });
 
-// 获取连接是否成功
+// 建立连接是否成功
 pool.getConnection((err, connection) => {
   if (err) {
     console.log("数据库连接失败", err);
