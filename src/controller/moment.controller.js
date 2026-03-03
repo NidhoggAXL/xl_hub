@@ -60,6 +60,7 @@ class MomentController {
       data: result
     }
   }
+
 }
 
 module.exports = new MomentController();

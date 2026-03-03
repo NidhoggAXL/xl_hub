@@ -2,6 +2,8 @@ const KoaRouter = require("@koa/router")
 const { verifyAuthor } = require("../middleware/login.middleware")
 const momentController = require("../controller/moment.controller")
 const { verifyPermission } = require("../middleware/permission.middleware")
+const { verifyLabelsExist } = require("../middleware/label.middleware")
+const labelController = require("../controller/label.controller")
 
 const momentRouter = new KoaRouter({ prefix: "/moment" })
 
@@ -15,5 +17,8 @@ momentRouter.get("/:momentId", momentController.detail)
 momentRouter.patch("/:momentId", verifyAuthor, verifyPermission, momentController.update)
 // 4.删除动态(删)
 momentRouter.delete("/:momentId", verifyAuthor, verifyPermission, momentController.remove)
+
+// 5.动态-添加标签
+momentRouter.post("/:momentId/labels", verifyAuthor, verifyPermission, verifyLabelsExist, labelController.addLabel)
 
 module.exports = momentRouter
