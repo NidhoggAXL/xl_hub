@@ -31,16 +31,29 @@ class MomentService {
       SELECT 
         m.id id, m.content, m.createAt createTime, m.updateAt updataTime,
         JSON_OBJECT('id', u.id, 'name', u.name, 'createTime', u.createAt, 'updataTime', u.updateAt) user,
+        (
+          SELECT 
+            JSON_ARRAYAGG(
+              JSON_OBJECT(
+                'id', c.id, 'content', c.content, 'commentId', c.comment_id,
+                'user', JSON_OBJECT('id', cu.id, 'name', cu.name)
+              )
+            )
+          FROM comment c
+          LEFT JOIN user cu ON c.user_id = cu.id
+          WHERE c.moment_id = m.id
+        ) as comments,
         JSON_ARRAYAGG(
-          JSON_OBJECT(
-            'id', c.id, 'content', c.content,'comment_id', c.comment_id,
-            'user', JSON_OBJECT('id', cu.id, 'name', cu.name)
+          IF(l.id IS NULL AND l.name IS NULL,NULL,
+            JSON_OBJECT(
+              'id', l.id, 'name', l.name
+            )
           )
-        ) comments
-      FROM moment m 
-      LEFT JOIN user u ON u.id = m.user_id
-      LEFT JOIN comment c ON c.moment_id = m.id
-      LEFT JOIN user cu ON cu.id = c.user_id
+        ) as labels
+      FROM moment m
+      LEFT JOIN user u ON m.user_id = u.id
+      LEFT JOIN moment_label ml ON ml.moment_id = m.id
+      LEFT JOIN label l ON l.id = ml.label_id
       WHERE m.id = ?
       GROUP BY m.id;
     `;

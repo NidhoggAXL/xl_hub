@@ -20,5 +20,4 @@ momentRouter.delete("/:momentId", verifyAuthor, verifyPermission, momentControll
 
 // 5.动态-添加标签
 momentRouter.post("/:momentId/labels", verifyAuthor, verifyPermission, verifyLabelsExist, labelController.addLabel)
-
 module.exports = momentRouter
