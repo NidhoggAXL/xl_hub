@@ -7,5 +7,6 @@ dotenv.config()
 
 // 从process.env里面解构出来SERVER_PROT，并导出
 module.exports = {
-  SERVER_PROT
+  SERVER_PROT,
+  SERVER_HOST
 } = process.env
